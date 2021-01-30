@@ -63,6 +63,7 @@ To make sure the system is always up and running, we've adopted two methods of d
 
 1. Deploying it as a **systemd daemon**
 2. Deploying it as a **Docker container** that can be deployed in a Kubernetes cluster.
+    $ docker run -d --name netgame -p 8080:8080 sirpros/netgame:latest
 
 In this document we are focused on the systemd daemon.
 
