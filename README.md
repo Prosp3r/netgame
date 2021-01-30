@@ -1,4 +1,4 @@
-##NETGAME CHALLENGE
+## NETGAME CHALLENGE
 
 A simple browser based multiplayer game written in Go and Vanila Javascript.
 
