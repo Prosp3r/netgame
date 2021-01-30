@@ -38,7 +38,8 @@ However it can be customized to:
 2. Set more than two player requirements for games to start.
 3. Run on a different port. 
 These can be achieved by using flags when starting up the game. eg. 
-(./netgame 3 8080 4 3)
+
+$ ./netgame 3 8080 4 3
 
 (3  --- 8080 ---   4  ---  3)
 
