@@ -39,7 +39,9 @@ However it can be customized to:
 3. Run on a different port. 
 These can be achieved by using flags when starting up the game. 
 eg. (./netgame 3 8080 4 3)
+
 (3  --- 8080 ---   4  ---  3)
+
 (No of games --- Custom Port for game --- Minimum number of players required --- Generate Fake players )
 
 The first number 3 is the number of games to run concurrently.
