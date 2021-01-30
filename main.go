@@ -1121,6 +1121,9 @@ func StartWebServer(port int, wg *sync.WaitGroup) {
 
 	log.Println("Web server running on port " + ports)
 	log.Fatal(http.ListenAndServe(ports, nil))
+
+	//log.Println("Website running on port " + port)
+	//http.ListenAndServe(port, nil)
 }
 
 func reader(conn *websocket.Conn) {
