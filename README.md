@@ -25,6 +25,7 @@ In the case of a tie the winner is the one whose name come first this is chosen 
 1. Unzip the content
 2. go into the folder netgame-master
 3. on mac terminal run ./netgame
+4. Edit the index.html file change the websocket connection to reflect the IP address of the server  i.e. change this (ws://localhost:8080/ws) to (ws://server_ip_address:8080/ws)
 
 
 ### Default setup
