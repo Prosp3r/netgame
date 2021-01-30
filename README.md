@@ -5,7 +5,9 @@ A simple browser based multiplayer game written in Go and Vanila Javascript.
 
 ## How it works
 This Network game is a lucky number game.
+
 Step 1 Players pick two numbers from 1 to 10 and enter to play with their username.
+
 Game requires a minimum of two players for a game to run. All other's who join after a game starts will be queued for the next game.
 Step 2 The computer picks random numbers btween 1 and 10 thirty times. Each time is called a round. 
 
