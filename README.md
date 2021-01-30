@@ -66,10 +66,5 @@ To make sure the system is always up and running, we've adopted two methods of d
 
     $ docker run -d --name netgame -p 8080:8080 sirpros/netgame:latest
 
-In this document we are focused on the systemd daemon.
-
-
-
-
 
 PS: Download zip file from github: https://github.com/Prosp3r/netgame/archive/master.zip
