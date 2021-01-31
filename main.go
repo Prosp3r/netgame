@@ -599,7 +599,8 @@ func (g *Game) Tally(GiD string) LeadBoard {
 	var LowScorer = make([]Play, 1)
 	var WinScorer = make([]Play, 1)
 	//var JackScorer = make([]Play, 1)
-	var TopTieScorer = make([]Play, len(g.Plays))
+	//var TopTieScorer = make([]Play, len(g.Plays))
+	var TopTieScorer []Play //may cause index range errors check properly
 	var LowTieScorer = make([]Play, len(g.Plays))
 	//var JackTieScorer = make([]Play, len(g.Plays))
 	var JackTieScorer []Play //= make([]Play, 0)
@@ -618,10 +619,16 @@ func (g *Game) Tally(GiD string) LeadBoard {
 	var currentTopScore int
 	var currentLowScore = g.Plays[0].Entries[2]
 
-	for _, v := range g.Plays {
+	for i, v := range g.Plays {
 		if v.Entries[2] == 21 {
 			//JackScorer[0] = v //no need
 			JackTieScorer = append(JackTieScorer, v)
+		}
+
+		if i == 0 {
+			//set first current top score and low scores
+			currentTopScore = v.Entries[2]
+			currentLowScore = v.Entries[2]
 		}
 
 		if v.Entries[2] > currentTopScore {
@@ -665,23 +672,23 @@ func (g *Game) Tally(GiD string) LeadBoard {
 					sort.SliceStable(TopTieScorer, func(i, j int) bool { return TopTieScorer[i].PlayerName < TopTieScorer[j].PlayerName })
 					WinScorer[0] = TopTieScorer[0]
 					TopScorer[0] = TopTieScorer[0]
-					MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 5 name winner Winner!!"))
+					//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 5 name winner Winner!!"))
 
 				} else {
 					WinScorer[0] = TopTieScorer[0]
-					MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 4 highest lowest chosen number Winner!!"))
+					//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 4 highest lowest chosen number Winner!!"))
 
 				}
 
 			} else {
 
 				WinScorer[0] = TopTieScorer[0]
-				MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 3 Highest chosen number Winner!!"))
+				//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 3 Highest chosen number Winner!!"))
 			}
 			//
 			MQ.enQ(msg.Wrap("AnnouncmentMQ", "High Score Winner!!"))
 		} else {
-			MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 2 Simple highest scorer Winner!!"))
+			//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 2 Simple highest scorer Winner!!"))
 			WinScorer[0] = TopScorer[0]
 		}
 
@@ -692,7 +699,7 @@ func (g *Game) Tally(GiD string) LeadBoard {
 		//choose from the top name of the jackpot tie
 		sort.SliceStable(JackTieScorer, func(i, j int) bool { return JackTieScorer[i].PlayerName < JackTieScorer[j].PlayerName })
 		WinScorer[0] = JackTieScorer[0]
-		MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 1 jack pot Winner!!"))
+		//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 1 jack pot Winner!!"))
 		//} else {
 		//or just the jackpot scorer
 		//	WinScorer[0] = JackScorer[0]
