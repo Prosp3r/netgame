@@ -648,7 +648,7 @@ func (g *Game) Tally(GiD string) LeadBoard {
 		}
 	}
 
-	if len(JackTieScorer[0].PlayerID) < 1 {
+	if len(JackTieScorer) < 1 {
 		//no jack pot winner use top scorer for wins
 		if len(TopTieScorer) > 1 {
 			//there's a tie
