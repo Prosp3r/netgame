@@ -635,7 +635,7 @@ func (g *Game) Tally(GiD string) LeadBoard {
 			TopScorer[0] = v
 			currentTopScore = v.Entries[2]
 			TopTieScorer = TopTieScorer[:0] //Clean or empty up tie
-			TopTieScorer = append(TopTieScorer, v)
+			//TopTieScorer = append(TopTieScorer, v)
 		}
 
 		if v.Entries[2] < currentLowScore {
@@ -663,6 +663,8 @@ func (g *Game) Tally(GiD string) LeadBoard {
 			//sort by players high input number
 			sort.SliceStable(TopTieScorer, func(i, j int) bool { return TopTieScorer[i].Entries[1] > TopTieScorer[j].Entries[1] })
 			if TopTieScorer[0].Entries[1] == TopTieScorer[1].Entries[1] {
+				MQ.enQ(msg.Wrap("AnnouncmentMQ", "Entry compare6: ["+strconv.Itoa(TopTieScorer[0].Entries[1])+"] &nbsp; ["+strconv.Itoa(TopTieScorer[1].Entries[1])+"]"))
+				MQ.enQ(msg.Wrap("AnnouncmentMQ", "Entry compare6low: ["+strconv.Itoa(TopTieScorer[0].Entries[0])+"] &nbsp; ["+strconv.Itoa(TopTieScorer[1].Entries[0])+"]"))
 
 				//there's a tie sort by players low input number
 				sort.SliceStable(TopTieScorer, func(i, j int) bool { return TopTieScorer[i].Entries[0] > TopTieScorer[j].Entries[0] })
@@ -672,23 +674,27 @@ func (g *Game) Tally(GiD string) LeadBoard {
 					sort.SliceStable(TopTieScorer, func(i, j int) bool { return TopTieScorer[i].PlayerName < TopTieScorer[j].PlayerName })
 					WinScorer[0] = TopTieScorer[0]
 					TopScorer[0] = TopTieScorer[0]
-					//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 5 name winner Winner!!"))
+					MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 5 name winner Winner!!"))
+					MQ.enQ(msg.Wrap("AnnouncmentMQ", "Entry compare5: ["+strconv.Itoa(TopTieScorer[0].Entries[1])+"] &nbsp; ["+strconv.Itoa(TopTieScorer[1].Entries[1])+"]"))
+					MQ.enQ(msg.Wrap("AnnouncmentMQ", "Entry compare5 low: ["+strconv.Itoa(TopTieScorer[0].Entries[0])+"] &nbsp; ["+strconv.Itoa(TopTieScorer[1].Entries[0])+"]"))
 
 				} else {
 					WinScorer[0] = TopTieScorer[0]
-					//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 4 highest lowest chosen number Winner!!"))
+					MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 4 highest lowest chosen number Winner!!"))
+					MQ.enQ(msg.Wrap("AnnouncmentMQ", "Entry compare 4: ["+strconv.Itoa(TopTieScorer[0].Entries[1])+"] &nbsp; ["+strconv.Itoa(TopTieScorer[1].Entries[1])+"]"))
 
 				}
 
 			} else {
 
 				WinScorer[0] = TopTieScorer[0]
-				//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 3 Highest chosen number Winner!!"))
+				MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 3 Highest chosen number Winner!!"))
+				MQ.enQ(msg.Wrap("AnnouncmentMQ", "Entry compare 3: ["+strconv.Itoa(TopTieScorer[0].Entries[1])+"] &nbsp; ["+strconv.Itoa(TopTieScorer[1].Entries[1])+"]"))
 			}
 			//
 			MQ.enQ(msg.Wrap("AnnouncmentMQ", "High Score Winner!!"))
 		} else {
-			//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 2 Simple highest scorer Winner!!"))
+			MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 2 Simple highest scorer Winner!!"))
 			WinScorer[0] = TopScorer[0]
 		}
 
@@ -699,7 +705,7 @@ func (g *Game) Tally(GiD string) LeadBoard {
 		//choose from the top name of the jackpot tie
 		sort.SliceStable(JackTieScorer, func(i, j int) bool { return JackTieScorer[i].PlayerName < JackTieScorer[j].PlayerName })
 		WinScorer[0] = JackTieScorer[0]
-		//MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 1 jack pot Winner!!"))
+		MQ.enQ(msg.Wrap("AnnouncmentMQ", "Case 1 jack pot Winner!!"))
 		//} else {
 		//or just the jackpot scorer
 		//	WinScorer[0] = JackScorer[0]
@@ -784,6 +790,7 @@ func broadCastGameList() {
 
 		//Make a fresh copy of games lists
 		//range Leadboard
+		Mutlock.Lock()
 		for i, v := range GlistDynamic {
 			//sort.SliceStable(JackTieScorer, func(i, j int) bool { return JackTieScorer[i].PlayerName < JackTieScorer[j].PlayerName })
 			if v == "Waiting" {
@@ -797,6 +804,7 @@ func broadCastGameList() {
 				LiveGamesList = "<div id=\"alltimebest\" class=\"eventbar lefttext\">" + "&nbsp;" + i + " &raquo status [" + v + "]</div>"
 			}
 		}
+		Mutlock.Unlock()
 		MQ.enQ(msg.Wrap("GameListMQ", LiveGamesList+GamesList))
 		MQ.enQ(msg.Wrap("LiveGameMQ", LiveGamesList))
 		Delay(2, "s")
