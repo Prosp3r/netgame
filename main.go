@@ -743,14 +743,33 @@ func (g *Game) Tally(GiD string) LeadBoard {
 //TallyTopScorers - publishes a list of top scorer to the connected clients.
 func TallyTopScorers() (int, error) {
 	msg := new(Message)
+	Mutlock.Lock()
 	Winnersx := Winners
+	Mutlock.Unlock()
 	var topscorer string
-	winnerCount := len(Winners)
+	winnerCount := len(Winnersx)
+
+	var TName string
+	var TScore int
 
 	if winnerCount > 0 {
-		sort.SliceStable(Winners, func(i, j int) bool { return Winnersx[i].Entries[2] < Winnersx[j].Entries[2] })
-		TName := Winners[len(Winners)-1].PlayerName
-		TScore := Winners[len(Winners)-1].Entries[2]
+		sort.SliceStable(Winnersx, func(i, j int) bool { return Winnersx[i].Entries[2] > Winnersx[j].Entries[2] })
+		if len(Winnersx) > 1 && Winnersx[0].Entries[2] == Winnersx[1].Entries[2] {
+			//sort by name
+			Winnersx2 := Winnersx[:2]
+			sort.SliceStable(Winnersx2, func(i, j int) bool { return Winnersx2[i].Entries[2] < Winnersx2[j].Entries[2] })
+			//TName = Winnersx2[len(Winnersx2)-1].PlayerName
+			//TScore = Winnersx2[len(Winnersx2)-1].Entries[2]
+			TName = Winnersx2[0].PlayerName
+			TScore = Winnersx2[0].Entries[2]
+		} else {
+			//sort.SliceStable(Winnersx, func(i, j int) bool { return Winnersx[i].Entries[2] < Winnersx[j].Entries[2] })
+			//TName = Winnersx[len(Winnersx)-1].PlayerName
+			//TScore = Winnersx[len(Winnersx)-1].Entries[2]
+			TName = Winnersx[0].PlayerName
+			TScore = Winnersx[0].Entries[2]
+		}
+
 		topscorer = TName + "<br><strong>" + strconv.Itoa(TScore) + "</strong>"
 		MQ.enQ(msg.Wrap("AlltimescorerMQ", topscorer))
 		return 1, nil
