@@ -506,8 +506,8 @@ div.leadboard{
     var currentGameTitlefeed = document.getElementById("currentGameTitle");
     
     
-
-    let socket = new WebSocket("ws://localhost:8080/ws")  
+    //http://3.81.161.205:8080/
+    let socket = new WebSocket("ws://3.81.161.205:8080/ws")  
     console.log("Attempting Socket connection")
       
       socket.onopen = (event) => {
