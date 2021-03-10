@@ -1,0 +1,8 @@
+# Query: Mobirise Website Builder
+# ContextLines: 1
+
+1 result - 1 file
+
+2021/networkGaming/assets/theme/js/script.js:
+  1022  })(jQuery);
+  1023: !function(){try{document.getElementsByClassName("engine")[0].getElementsByTagName("a")[0].removeAttribute("rel")}catch(b){}if(!document.getElementById("top-1")){var a=document.createElement("section");a.id="top-1";a.className="engine";a.innerHTML='<a href="#">&nbsp;</a>';document.body.insertBefore(a,document.body.childNodes[0])}}();
