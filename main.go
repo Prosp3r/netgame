@@ -71,7 +71,7 @@ func getSecret() (DatabaseAuth, error) {
 			// Message from an error.
 			fmt.Println(err.Error())
 		}
-		return err.Error()
+		return nil, err.Error()
 	}
 
 	// Decrypts secret using the associated KMS CMK.
@@ -86,14 +86,14 @@ func getSecret() (DatabaseAuth, error) {
 		len, err := base64.StdEncoding.Decode(decodedBinarySecretBytes, result.SecretBinary)
 		if err != nil {
 			fmt.Println("Base64 Decode Error:", err)
-			return err.Error()
+			return nil, err.Error()
 		}
 		decodedBinarySecret = string(decodedBinarySecretBytes[:len])
 		json.Unmarshal([]byte(decodedBinarySecret), &dbAuth)
 	}
 
 	// Your code goes here.
-	return dbAuth
+	return dbAuth, nil
 }
 
 func main() {
@@ -101,7 +101,11 @@ func main() {
 	for {
 		cnt++
 		fmt.Printf("%v Attempting retrieval \n", cnt)
-		dba := getSecret()
+		dba, err := getSecret()
+		if err != nil {
+			fmt.Println(err)
+		}
+
 		fmt.Println(dba)
 		time.Sleep(time.Second * time.Duration(3))
 	}
