@@ -17,14 +17,16 @@ import (
 
 //DatabaseAuth -Hold the structure for all data returned from aws secrets manager
 type DatabaseAuth struct {
-	Host     string `json:"host"`
-	Port     string `json:"port"`
-	UserName string `json:"username"`
-	Password string `json:"password"`
-	Dbname   string `json:"dbname"`
+	Host                 string `json:"host"`
+	UserName             string `json:"username"`
+	Password             string `json:"password"`
+	Port                 string `json:"port"`
+	DbInstanceIdentifier string `json:"dbInstanceIdentifier"`
+	DBEngine             string `json:"engine"`
 	//os.Getenv("DB_NAME"))
 }
 
+//{"username":"pgadmin","password":"akomeno123,","engine":"postgres","host":"ngtest002.cxrap41ptykp.us-east-1.rds.amazonaws.com","port":5432,"dbInstanceIdentifier":"ngtest002"}
 /*/DatabaseAuth -Hold the structure for all data returned from aws secrets manager
 type DatabaseAuth struct{}*/
 
