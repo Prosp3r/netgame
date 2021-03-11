@@ -26,7 +26,7 @@ import (
 //DatabaseAuth -Hold the structure for all data returned from aws secrets manager
 type DatabaseAuth struct{}
 
-func getSecret() DatabaseAuth {
+func getSecret() (DatabaseAuth, error) {
 	secretName := "ng/masterpg"
 	region := "us-east-1"
 
@@ -71,7 +71,7 @@ func getSecret() DatabaseAuth {
 			// Message from an error.
 			fmt.Println(err.Error())
 		}
-		return
+		return err.Error()
 	}
 
 	// Decrypts secret using the associated KMS CMK.
@@ -86,11 +86,10 @@ func getSecret() DatabaseAuth {
 		len, err := base64.StdEncoding.Decode(decodedBinarySecretBytes, result.SecretBinary)
 		if err != nil {
 			fmt.Println("Base64 Decode Error:", err)
-			return
+			return err.Error()
 		}
 		decodedBinarySecret = string(decodedBinarySecretBytes[:len])
 		json.Unmarshal([]byte(decodedBinarySecret), &dbAuth)
-
 	}
 
 	// Your code goes here.
