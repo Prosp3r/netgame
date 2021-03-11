@@ -14,17 +14,6 @@ import (
 	"time"
 )
 
-func main() {
-	cnt := 0
-	for {
-		cnt++
-		fmt.Printf("%v Attempting retrieval \n", cnt)
-		dba := getSecret()
-		fmt.Println(dba)
-		time.Sleep(time.Second * time.Duration(3))
-	}
-}
-
 func getSecret() Models.DatabaseAuth {
 	secretName := "ng/masterpg"
 	region := "us-east-1"
@@ -94,4 +83,15 @@ func getSecret() Models.DatabaseAuth {
 
 	// Your code goes here.
 	return dbAuth
+}
+
+func main() {
+	cnt := 0
+	for {
+		cnt++
+		fmt.Printf("%v Attempting retrieval \n", cnt)
+		dba := getSecret()
+		fmt.Println(dba)
+		time.Sleep(time.Second * time.Duration(3))
+	}
 }
