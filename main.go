@@ -91,7 +91,7 @@ func getSecret() (DatabaseAuth, error) {
 			//return dbAuth, err
 		}
 		decodedBinarySecret = string(decodedBinarySecretBytes[:len])
-		fmt.Println(decodedBinarySecret)
+		fmt.Printf("Secretes: %v\n", decodedBinarySecret)
 		json.Unmarshal([]byte(decodedBinarySecret), &dbAuth)
 	}
 
