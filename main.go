@@ -19,12 +19,13 @@ func main() {
 	for {
 		cnt++
 		fmt.Printf("%v Attempting retrieval \n", cnt)
-		getSecret()
+		dba := getSecret()
+		fmtlPrintln(dba)
 		time.Sleep(time.Second * time.Duration(3))
 	}
 }
 
-func getSecret() {
+func getSecret() Models.DatabaseAuth {
 	secretName := "ng/masterpg"
 	region := "us-east-1"
 
@@ -74,8 +75,11 @@ func getSecret() {
 	// Decrypts secret using the associated KMS CMK.
 	// Depending on whether the secret is a string or binary, one of these fields will be populated.
 	var secretString, decodedBinarySecret string
+	var dbAuth = Models.DatabaseAuth{}
 	if result.SecretString != nil {
 		secretString = *result.SecretString
+		json.Unmarshal([]byte(secretString), &dbAuth)
+
 	} else {
 		decodedBinarySecretBytes := make([]byte, base64.StdEncoding.DecodedLen(len(result.SecretBinary)))
 		len, err := base64.StdEncoding.Decode(decodedBinarySecretBytes, result.SecretBinary)
@@ -84,8 +88,10 @@ func getSecret() {
 			return
 		}
 		decodedBinarySecret = string(decodedBinarySecretBytes[:len])
+		json.Unmarshal([]byte(decodedBinarySecret), &dbAuth)
+
 	}
 
 	// Your code goes here.
-	fmt.Printf("Current secrete cred : %v\n Decoded Bin : %v\n", secretString, decodedBinarySecret)
+	return dbAuth
 }
