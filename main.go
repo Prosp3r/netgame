@@ -84,5 +84,5 @@ func getSecret() {
 	}
 
 	// Your code goes here.
-	fmt.Printf("Current secrete cred : %v\n", secretString)
+	fmt.Printf("Current secrete cred : %v\n Decoded Bin : %v\n", secretString, decodedBinarySecret)
 }
