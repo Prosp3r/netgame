@@ -40,7 +40,7 @@ func main() {
 			fmt.Println(err)
 		}
 
-		fmt.Printf("Access Host: %v\n Access Port: %v\n Access Username: %v\n Access password: %v\n ", dba.Host, dba.Port, dba.UserName, dba.Password)
+		fmt.Printf("Access Host: %v\n Access Port: %v\n Access Username: %v\n Access password: %v\n DBEngine: %v\n  ", dba.Host, dba.Port, dba.UserName, dba.Password, dba.DBEngine)
 		time.Sleep(time.Second * time.Duration(3))
 	}
 }
