@@ -14,7 +14,18 @@ import (
 	"time"
 )
 
-func getSecret() Models.DatabaseAuth {
+/*type DatabaseAuth struct {
+	Host     string `json:"host"`
+	Port     string `json:"port"`
+	UserName string `json:"username"`
+	Password string `json:"password"`
+	Dbname   string `json:"dbname"`
+	//os.Getenv("DB_NAME"))
+}*/
+//DatabaseAuth -Hold the structure for all data returned from aws secrets manager
+type DatabaseAuth struct{}
+
+func getSecret() DatabaseAuth {
 	secretName := "ng/masterpg"
 	region := "us-east-1"
 
@@ -30,7 +41,7 @@ func getSecret() Models.DatabaseAuth {
 	// See https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
 
 	result, err := svc.GetSecretValue(input)
-	var dbAuth = Models.DatabaseAuth{}
+	var dbAuth = DatabaseAuth{}
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			switch aerr.Code() {
