@@ -110,7 +110,7 @@ func main() {
 			fmt.Println(err)
 		}
 
-		fmt.Println(dba)
+		fmt.Printf("Access param : ", dba)
 		time.Sleep(time.Second * time.Duration(3))
 	}
 }
