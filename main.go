@@ -20,7 +20,7 @@ func main() {
 		cnt++
 		fmt.Printf("%v Attempting retrieval \n", cnt)
 		dba := getSecret()
-		fmtlPrintln(dba)
+		fmt.Println(dba)
 		time.Sleep(time.Second * time.Duration(3))
 	}
 }
