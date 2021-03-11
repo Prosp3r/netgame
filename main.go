@@ -17,7 +17,7 @@ import (
 func main() {
 	for {
 		getSecret()
-		time.Sleep(time.Millisecond * time.Duration(1000))
+		time.Sleep(time.Second * time.Duration(3))
 	}
 }
 
