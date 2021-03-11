@@ -1,5 +1,9 @@
 package main
 
+// Use this code snippet in your app.
+// If you need more information about configurations or implementing the sample code, visit the AWS docs:
+// https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/setting-up.html
+
 import (
 	"encoding/base64"
 	"fmt"
@@ -10,11 +14,14 @@ import (
 )
 
 func main() {
-	getSecret()
+	for {
+		getSecret()
+		time.Sleep(time.Millisecond * time.Duration(1000))
+	}
 }
 
 func getSecret() {
-	secretName := "ng/masterpgsql"
+	secretName := "ng/masterpg"
 	region := "us-east-1"
 
 	//Create a Secrets Manager client
@@ -76,6 +83,5 @@ func getSecret() {
 	}
 
 	// Your code goes here.
-	fmt.Printf("Decoded Secret : %v\n", decodedBinarySecret)
-
+	fmt.Printf("Current secrete cred : %v\n", decodedBinarySecret)
 }
