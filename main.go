@@ -99,7 +99,6 @@ func getSecret() (DatabaseAuth, error) {
 	var secretString, decodedBinarySecret string
 	if result.SecretString != nil {
 		secretString = *result.SecretString
-		fmt.Println(secretString)
 		json.Unmarshal([]byte(secretString), &dbAuth)
 
 	} else {
