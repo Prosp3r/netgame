@@ -28,6 +28,22 @@ type DatabaseAuth struct {
 /*/DatabaseAuth -Hold the structure for all data returned from aws secrets manager
 type DatabaseAuth struct{}*/
 
+func main() {
+	cnt := 0
+	for {
+		cnt++
+		fmt.Printf("%v Attempting retrieval \n", cnt)
+		dba, err := getSecret()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		fmt.Printf("Access Host: %v\n Access Port: %v\n Access Username: %v\n Access password: %v\n ", dba.Host, dba.Port, dba.UserName dba.Password)
+		time.Sleep(time.Second * time.Duration(3))
+	}
+}
+
+//getSecret - Fetches secret db access param from aws Secret manager
 func getSecret() (DatabaseAuth, error) {
 	secretName := "ng/masterpg"
 	region := "us-east-1"
@@ -81,7 +97,7 @@ func getSecret() (DatabaseAuth, error) {
 	var secretString, decodedBinarySecret string
 	if result.SecretString != nil {
 		secretString = *result.SecretString
-		fmt.Println(secretString)
+		//fmt.Println(secretString)
 		json.Unmarshal([]byte(secretString), &dbAuth)
 
 	} else {
@@ -98,19 +114,4 @@ func getSecret() (DatabaseAuth, error) {
 
 	// Your code goes here.
 	return dbAuth, nil
-}
-
-func main() {
-	cnt := 0
-	for {
-		cnt++
-		fmt.Printf("%v Attempting retrieval \n", cnt)
-		dba, err := getSecret()
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		fmt.Printf("Access param : ", dba)
-		time.Sleep(time.Second * time.Duration(3))
-	}
 }
