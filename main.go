@@ -15,16 +15,18 @@ import (
 	"time"
 )
 
-/*type DatabaseAuth struct {
+//DatabaseAuth -Hold the structure for all data returned from aws secrets manager
+type DatabaseAuth struct {
 	Host     string `json:"host"`
 	Port     string `json:"port"`
 	UserName string `json:"username"`
 	Password string `json:"password"`
 	Dbname   string `json:"dbname"`
 	//os.Getenv("DB_NAME"))
-}*/
-//DatabaseAuth -Hold the structure for all data returned from aws secrets manager
-type DatabaseAuth struct{}
+}
+
+/*/DatabaseAuth -Hold the structure for all data returned from aws secrets manager
+type DatabaseAuth struct{}*/
 
 func getSecret() (DatabaseAuth, error) {
 	secretName := "ng/masterpg"
