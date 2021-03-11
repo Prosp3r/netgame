@@ -20,7 +20,7 @@ type DatabaseAuth struct {
 	Host                 string `json:"host"`
 	UserName             string `json:"username"`
 	Password             string `json:"password"`
-	Port                 string `json:"port"`
+	APort                int    `json:"port"`
 	DbInstanceIdentifier string `json:"dbInstanceIdentifier"`
 	DBEngine             string `json:"engine"`
 	//os.Getenv("DB_NAME"))
@@ -40,7 +40,7 @@ func main() {
 			fmt.Println(err)
 		}
 
-		fmt.Printf("Access Host: %v\n Access Port: %v\n Access Username: %v\n Access password: %v\n DBEngine: %v\n  ", dba.Host, dba.Port, dba.UserName, dba.Password, dba.DBEngine)
+		fmt.Printf("Access Host: %v\n Access Port: %v\n Access Username: %v\n Access password: %v\n DBEngine: %v\n  ", dba.Host, dba.APort, dba.UserName, dba.Password, dba.DBEngine)
 		time.Sleep(time.Second * time.Duration(3))
 	}
 }
