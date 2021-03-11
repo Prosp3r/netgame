@@ -41,6 +41,7 @@ func getSecret() Models.DatabaseAuth {
 	// See https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
 
 	result, err := svc.GetSecretValue(input)
+	var dbAuth = Models.DatabaseAuth{}
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			switch aerr.Code() {
@@ -75,7 +76,6 @@ func getSecret() Models.DatabaseAuth {
 	// Decrypts secret using the associated KMS CMK.
 	// Depending on whether the secret is a string or binary, one of these fields will be populated.
 	var secretString, decodedBinarySecret string
-	var dbAuth = Models.DatabaseAuth{}
 	if result.SecretString != nil {
 		secretString = *result.SecretString
 		json.Unmarshal([]byte(secretString), &dbAuth)
