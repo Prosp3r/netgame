@@ -15,7 +15,10 @@ import (
 )
 
 func main() {
+	cnt := 0
 	for {
+		cnt++
+		fmt.Printf("%v Attempting retrieval \n", cnt)
 		getSecret()
 		time.Sleep(time.Second * time.Duration(3))
 	}
