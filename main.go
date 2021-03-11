@@ -71,7 +71,7 @@ func getSecret() (DatabaseAuth, error) {
 			// Message from an error.
 			fmt.Println(err.Error())
 		}
-		return dbAuth, error.Error()
+		//return dbAuth, error.Error()
 	}
 
 	// Decrypts secret using the associated KMS CMK.
@@ -86,7 +86,7 @@ func getSecret() (DatabaseAuth, error) {
 		len, err := base64.StdEncoding.Decode(decodedBinarySecretBytes, result.SecretBinary)
 		if err != nil {
 			fmt.Println("Base64 Decode Error:", err)
-			return dbAuth, error.Error()
+			//return dbAuth, err
 		}
 		decodedBinarySecret = string(decodedBinarySecretBytes[:len])
 		json.Unmarshal([]byte(decodedBinarySecret), &dbAuth)
